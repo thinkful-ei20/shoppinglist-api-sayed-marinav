@@ -46,6 +46,10 @@ const shoppingList = (function(){
     if (store.searchTerm) {
       items = store.items.filter(item => item.name.includes(store.searchTerm));
     }
+    if (store.error) {
+      console.log(store.error);
+      store.error = null;
+    }
   
     // render the shopping list in the DOM
     console.log('`render` ran');
@@ -60,10 +64,15 @@ const shoppingList = (function(){
       event.preventDefault();
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
-      api.createItem(newItemName, (newItem) => {
-        store.addItem(newItem);
-        render();
-      });
+      api.createItem(newItemName, 
+        (newItem) => {
+          store.addItem(newItem);
+          render();
+        }, 
+        (error) => {
+          store.setError(error);
+          render();
+        });
     });
   }
 
@@ -79,11 +88,13 @@ const shoppingList = (function(){
       let currItem = store.items.find(el => {
         return el.id === id;
       });
-      console.log(currItem)
       let switchChecked = currItem.checked = !currItem.checked;
-      console.log(switchChecked)
       api.updateItem(id, {checked: switchChecked}, () => {
         store.findAndUpdate(id, {checked: switchChecked});
+        render();
+      }, 
+      (error) => {
+        store.setError(error);
         render();
       });
     });
@@ -98,6 +109,10 @@ const shoppingList = (function(){
       api.deleteItem(id, () => {
         store.findAndDelete(id);
         render();
+      },
+      (error) => {
+        store.setError(error);
+        render();
       });
     });
   }
@@ -109,6 +124,10 @@ const shoppingList = (function(){
       const itemName = $(event.currentTarget).find('.shopping-item').val();
       api.updateItem(id, {name: itemName}, () => {
         store.findAndUpdate(id, {name: itemName});
+        render();
+      },
+      (error) => {
+        store.setError(error);
         render();
       });
     });

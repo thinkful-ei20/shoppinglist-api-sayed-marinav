@@ -18,24 +18,9 @@ const store = (function(){
     Object.assign(currObj, newItem);
   };
 
-  // const findAndToggleChecked = function(id) {
-  //   const item = this.findById(id);
-  //   item.checked = !item.checked;
-  // };
-
   const findAndDelete = function(id) {
     this.items = this.items.filter(item => item.id !== id);
   };
-
-  // const findAndUpdateName = function(id, name) {
-  //   try {
-  //     Item.validateName(name);
-  //     const item = this.findById(id);
-  //     item.name = name;
-  //   } catch(e) {
-  //     console.log('Cannot update name: ' + e.message);
-  //   }
-  // };
 
   const toggleCheckedFilter = function() {
     this.hideCheckedItems = !this.hideCheckedItems;
@@ -45,17 +30,23 @@ const store = (function(){
     this.searchTerm = term;
   };
 
+  const setError = function(e) {
+    this.error = e.responseText;
+  };
+
   return {
     items: [],
     hideCheckedItems: false,
     searchTerm: '',
     error: null,
+
     addItem,
     findById,
     findAndUpdate,
     findAndDelete,
     toggleCheckedFilter,
     setSearchTerm,
+    setError,
   };
   
 }());
