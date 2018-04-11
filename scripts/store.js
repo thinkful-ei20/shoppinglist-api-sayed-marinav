@@ -11,13 +11,17 @@ const store = (function(){
     return this.items.find(item => item.id === id);
   };
 
-  const findAndUpdate = function(id, newData) {
+  const findAndUpdate = function(id, newItem) {
     const currObj = this.items.find(el => {
       return el.id === id;
     });
-    console.log(currObj);
-    // const currObj = this.items.id === id;
-      Object.assign(currObj, newData);
+    const updatedItem = Object.assign(currObj, newItem);
+    console.log(updatedItem)
+    // this.items.map((el, index) => {
+    //   if (el.id === id) {
+    //     el = updatedItem;
+    //   }
+    // });
   };
 
   // const findAndToggleChecked = function(id) {
