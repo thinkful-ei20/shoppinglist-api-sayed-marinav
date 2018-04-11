@@ -11,15 +11,11 @@ const store = (function(){
     return this.items.find(item => item.id === id);
   };
 
-  const findAndUpdate = function(id, newData) {
+  const findAndUpdate = function(id, newItem) {
     const currObj = this.items.find(el => {
       return el.id === id;
     });
-    console.log(currObj);
-    // const currObj = this.items.id === id;
-      Object.assign(currObj, newData);
-    console.log(currObj);
-
+    Object.assign(currObj, newItem);
   };
 
   // const findAndToggleChecked = function(id) {
