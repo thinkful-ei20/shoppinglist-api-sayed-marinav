@@ -55,7 +55,6 @@ const shoppingList = (function(){
     $('.js-shopping-list').html(shoppingListItemsString);
   }
   
-  
   function handleNewItemSubmit() {
     $('#js-shopping-list-form').submit(function (event) {
       event.preventDefault();
@@ -88,9 +87,10 @@ const shoppingList = (function(){
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
       // delete the item
-      store.findAndDelete(id);
-      // render the updated shopping list
-      render();
+      api.deleteItem(id, () => {
+        store.findAndDelete(id);
+        render();
+      });
     });
   }
   
@@ -99,10 +99,17 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      store.findAndUpdateName(id, itemName);
-      render();
+      api.updateItem(id, itemName, (data) => {
+        store.findAndUpdate(id, data);
+        render();
+      });
     });
   }
+
+
+
+
+
   
   function handleToggleFilterClick() {
     $('.js-filter-checked').click(() => {

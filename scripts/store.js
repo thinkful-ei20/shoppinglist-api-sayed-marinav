@@ -18,6 +18,8 @@ const store = (function(){
     console.log(currObj);
     // const currObj = this.items.id === id;
       Object.assign(currObj, newData);
+    console.log(currObj);
+
   };
 
   // const findAndToggleChecked = function(id) {

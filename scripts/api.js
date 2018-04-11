@@ -27,10 +27,20 @@ const api = (function() {
     });
   };
 
+  const deleteItem = function(id, callback) {
+    $.ajax({
+      url: `${BASE_URL}/items/${id}`,
+      method: 'DELETE',
+      // contentType: 'application/json',
+      // data: JSON.stringify(updateData),
+      success: callback,
+    });
+  };
 
   return {
     getItems, 
     createItem,
     updateItem,
+    deleteItem,
   };
 }());
